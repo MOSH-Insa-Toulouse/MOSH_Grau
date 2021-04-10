@@ -32,9 +32,16 @@ Serial.begin(baudrate);
 mySerial.begin(baudrate);
 
 display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
+
+//Ecrand de démarrage
 display.display();
 delay(2000);
-
+display.clearDisplay();
+display.setTextSize(1);
+display.setTextColor(WHITE);
+display.println("Bonjour !");
+display.display();
+delay(3000);
 
 }
 
