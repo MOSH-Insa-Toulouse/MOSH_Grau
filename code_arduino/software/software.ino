@@ -28,19 +28,28 @@ SoftwareSerial BT_serial (rxpin,txpin);
 Adafruit_SSD1306 display(OLED_RESET); 
 
 
-
 int ADC_pin = 0;
+
 int data = 0;
 
+//Résistance de calibration
 String R2 = "1000";
-String data_flow = "On";
 
-int menuCount =0;
+byte MainMenuCount =0;
+byte R2MenuCount=0;
+byte MeasuresMenuCount=0;
+byte StressMenuCount=0;
+
+int contrainte = 0;
+int tension = 0;
+int deformation=0;
+int Rsensor=0;
 
 const long interval = 1000;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 
+//Afficher un texte sur l'écran OLED
 void print_oled(String s, int x, int y, uint16_t color, int size_text){
   display.setTextSize(size_text);
   display.setTextColor(color);
@@ -52,7 +61,7 @@ void doEncoder(){
  
 }
 
-void staticMenu() {
+void mainMenu() {
   
   //---------------------------------
   print_oled("R2 : ", 10, 0, WHITE, 1);
@@ -61,11 +70,60 @@ void staticMenu() {
   print_oled("Val ADC : ", 10, 10, WHITE, 1);
   print_oled(String(data), 60, 10, WHITE, 1);
 
-  print_oled("Data_flow : ", 10, 20, WHITE, 1);
-  print_oled(data_flow, 80, 20, WHITE, 1);
+  print_oled("Contrainte : ", 10, 20, WHITE, 1);
+  print_oled(String(contrainte), 80, 20, WHITE, 1);
 
  
-  display.setCursor(2, (menuCount * 10));
+  display.setCursor(2, (MainMenuCount * 10));
+  display.println(">");
+
+  display.display();
+}
+
+void R2Menu() {
+  
+  //---------------------------------
+  print_oled("100", 10, 0, WHITE, 1);
+  
+  print_oled("1000", 10, 10, WHITE, 1);
+
+  print_oled("10000", 10, 20, WHITE, 1);
+ 
+  display.setCursor(2, (R2MenuCount * 10));
+  display.println(">");
+
+  display.display();
+}
+
+void MeasuresMenu() {
+  
+  //---------------------------------
+  print_oled("Résistance : ", 10, 0, WHITE, 1);
+  print_oled(String(Rsensor), 60, 0, WHITE, 1);
+  
+  print_oled("Tension : ", 10, 10, WHITE, 1);
+  print_oled(String(tension), 60, 10, WHITE, 1);
+
+  print_oled("Déformation : ", 10, 20, WHITE, 1);
+  print_oled(String(deformation), 80, 20, WHITE, 1);
+ 
+  display.setCursor(2, (MeasuresMenuCount * 10));
+  display.println(">");
+
+  display.display();
+}
+
+
+void StressMenu() {
+  
+  //---------------------------------
+  print_oled("Acier", 10, 0, WHITE, 1);
+  
+  print_oled("Aluminium", 10, 10, WHITE, 1);
+
+  print_oled("Fer", 10, 20, WHITE, 1);
+ 
+  display.setCursor(2, (StressMenuCount * 10));
   display.println(">");
 
   display.display();
@@ -107,6 +165,6 @@ if(BT_serial.available()){
   R2 = (BT_serial.readString());
   Serial.println(R2);
 }
-staticMenu();
+mainMenu();
 display.clearDisplay();
 }
