@@ -33,38 +33,64 @@ int ADC_pin = 0;
 int data = 0;
 
 String R2 = "1000";
+String data_flow = "On";
+
+int menuCount =0;
 
 const long interval = 1000;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 
-void write_txt_oled(String s, int x, int y, String color){
-
-
-
-  
+void print_oled(String s, int x, int y, uint16_t color, int size_text){
+  display.setTextSize(size_text);
+  display.setTextColor(color);
+  display.setCursor(x, y);
+  display.println(s);   
 }
+
+void doEncoder(){
+ 
+}
+
+void staticMenu() {
+  
+  //---------------------------------
+  print_oled("R2 : ", 10, 0, WHITE, 1);
+  print_oled(R2, 60, 0, WHITE, 1);
+  
+  print_oled("Val ADC : ", 10, 10, WHITE, 1);
+  print_oled(String(data), 60, 10, WHITE, 1);
+
+  print_oled("Data_flow : ", 10, 20, WHITE, 1);
+  print_oled(data_flow, 80, 20, WHITE, 1);
+
+ 
+  display.setCursor(2, (menuCount * 10));
+  display.println(">");
+
+  display.display();
+}
+
 
 
 void setup() {
 pinMode(rxpin, INPUT);
 pinMode(txpin, OUTPUT);
 
+pinMode(encoder0PinA, INPUT);
+
 Serial.begin(baudrate);
 BT_serial.begin(baudrate);
 
+//Ecran de démarrage
 display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
-
-
-
-//Ecrand de démarrage
 display.display();
+
 delay(2000);
 display.clearDisplay();
-display.setTextSize(1);
-display.setTextColor(WHITE);
-display.println("Bonjour !");
-display.display();
+
+print_oled("Bonjour !", 64, 16, WHITE, 1);
+
 delay(3000);
 
 }
@@ -80,17 +106,7 @@ if((currentMillis-previousMillis) >= interval){
 if(BT_serial.available()){
   R2 = (BT_serial.readString());
   Serial.println(R2);
-
-
 }
-
+staticMenu();
 display.clearDisplay();
-display.setCursor (10, 10);
-display.setTextSize(1);
-display.setTextColor(WHITE);
-display.println(R2); 
-display.display();
-
-;
-
 }
