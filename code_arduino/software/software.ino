@@ -34,10 +34,14 @@ int data = 0;
 //Résistance de calibration
 String R2 = "1000";
 
+byte countMenus [4]={0,0,0,0};
+
 byte MainMenuCount = 0;
 byte R2MenuCount = 0;
 byte MeasuresMenuCount = 0;
 byte StressMenuCount = 0;
+
+byte currentMenu=3;
 
 int contrainte = 0;
 int tension = 0;
@@ -77,6 +81,17 @@ void doEncoder(){
 previous_state_pinA = current_state_pinA;
 }
 
+
+
+void doEncoderSwitch(){
+  if(currentMenu==3){
+  currentMenu=MainMenuCount;
+  }
+  else{
+    currentMenu=3;
+  }
+}
+
 void mainMenu() {
 
   //---------------------------------
@@ -90,7 +105,7 @@ void mainMenu() {
   print_oled(String(contrainte), 90, 20, WHITE, 1);
 
 
-  display.setCursor(2, (MainMenuCount * 10));
+  display.setCursor(2, (countMenus[3] * 10));
   display.println(">");
 
   display.display();
@@ -105,7 +120,7 @@ void R2Menu() {
 
   print_oled("10000", 10, 20, WHITE, 1);
 
-  display.setCursor(2, (R2MenuCount * 10));
+  display.setCursor(2, (countMenus[0] * 10));
   display.println(">");
 
   display.display();
@@ -114,16 +129,16 @@ void R2Menu() {
 void MeasuresMenu() {
 
   //---------------------------------
-  print_oled("Résistance : ", 10, 0, WHITE, 1);
-  print_oled(String(Rsensor), 60, 0, WHITE, 1);
+  print_oled("Resistance : ", 10, 0, WHITE, 1);
+  print_oled(String(Rsensor), 80, 0, WHITE, 1);
 
   print_oled("Tension : ", 10, 10, WHITE, 1);
-  print_oled(String(tension), 60, 10, WHITE, 1);
+  print_oled(String(tension), 80, 10, WHITE, 1);
 
   print_oled("Déformation : ", 10, 20, WHITE, 1);
   print_oled(String(deformation), 80, 20, WHITE, 1);
 
-  display.setCursor(2, (MeasuresMenuCount * 10));
+  display.setCursor(2, (countMenus[1] * 10));
   display.println(">");
 
   display.display();
@@ -139,7 +154,7 @@ void StressMenu() {
 
   print_oled("Fer", 10, 20, WHITE, 1);
 
-  display.setCursor(2, (StressMenuCount * 10));
+  display.setCursor(2, (countMenus[2] * 10));
   display.println(">");
 
   display.display();
@@ -168,6 +183,7 @@ void setup() {
   BT_serial.begin(baudrate);
 
   attachInterrupt(1, doEncoder, RISING);
+  attachInterrupt(digitalPinToInterrupt(2), doEncoderSwitch, FALLING);
 
   //Ecran de démarrage
   display.begin(SSD1306_SWITCHCAPVCC, 0x3c);
@@ -189,24 +205,51 @@ void loop() {
     data = analogRead(ADC_pin);
     data = map(data, 0, 1024, 0, 255);
     BT_serial.write(data);
+    Serial.println(currentMenu);
   }
   if (BT_serial.available()) {
     R2 = (BT_serial.readString());
     Serial.println(R2);
   }
-  mainMenu();
-  display.clearDisplay();
+
+  switch(currentMenu){
+    case 0:
+      display.clearDisplay();
+      R2Menu();
+      break;
+    case 1:
+      display.clearDisplay();
+      MeasuresMenu();
+      break;
+    case 2:
+      display.clearDisplay();
+      StressMenu();
+      break;
+    case 3:
+      display.clearDisplay();
+      mainMenu();
+      break;
+  }
+ 
+  
 
   if((current_pos_enc-previous_pos_enc) >= 4){
 
-    MainMenuCount++;
-    MainMenuCount=MainMenuCount%3;
+    //MainMenuCount++;
+    //MainMenuCount=MainMenuCount%3;
+    //previous_pos_enc=current_pos_enc;
+
+    countMenus[currentMenu]++;
+    countMenus[currentMenu]%3;
     previous_pos_enc=current_pos_enc;
+
+
+    
   }
    if((current_pos_enc-previous_pos_enc) <= -4){
 
-    MainMenuCount--;
-    MainMenuCount=MainMenuCount%3;
+    countMenus[currentMenu]--;
+    countMenus[currentMenu]%3;
     previous_pos_enc=current_pos_enc;
   }
   
