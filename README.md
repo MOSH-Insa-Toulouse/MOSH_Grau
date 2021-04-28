@@ -52,9 +52,10 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 
 *Paramètres étudiés :*
 
-1. Type de papier : - Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
-                    - Feuille A4 de bureau standard, 80 g/m², épaisseur : 0,08mm, rigidité???
-                    - Fiche Bristol, 205 g/m², épaisseur : 0,22mm, rigidité ???
+1. Type de papier : 
+- Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
+- Feuille A4 de bureau standard, 80 g/m², épaisseur : 0,08mm, rigidité???
+- Fiche Bristol, 205 g/m², épaisseur : 0,22mm, rigidité ???
 
 2. Type de crayon : H, HB, B, 2B
 3. Forme de la jauge 
