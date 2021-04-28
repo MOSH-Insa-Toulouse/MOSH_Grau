@@ -76,7 +76,7 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 
 La résistance R2 permet d'adapter le gain de l'amplificateur. Il permet notamment de déterminer la plage de résistance mesurable : 
 
-$e^{i \pi} = -1$
+<img src="https://latex.codecogs.com/gif.latex?O_t=\text { Onset event at time bin } t " /> 
 
 
 
