@@ -47,10 +47,12 @@ Gère les flux de données entre l'APK et le microcontrôleur via le module BT. 
 
 La solution choisie afin de tester et caractériser les capteurs est l'application d'une déflection en compression ou en traction. 
 
-- Défelction en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même.
-- Déflection en traction : idem qu'en compression mais plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge.  
+- Défelction en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
+- Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge.  
 
-*Paramètres étudiés :*
+**Paramètres étudiés :**
+
+*Paramètres contrôlables : *
 
 1. Type de papier : 
 - Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
@@ -58,7 +60,12 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 - Fiche Bristol, 205 g/m², épaisseur : 0,22mm, rigidité ???
 
 2. Type de crayon : H, HB, B, 2B
-3. Forme de la jauge 
+3. Forme de la jauge, notamment la surface de la couche de graphite, la longueur du motif de graphite etc... 
 4. Influence de la résistance nominale
 
+*Paramètres non contrôlables :*
+
+1. Formation des réseaux de percolation
+2. Epaisseur de la couche de graphite
+3. Homogénéité de la couche de graphite
 
