@@ -31,6 +31,7 @@ Ce projet aborde de nombreuses notions : la physique des systèmes granulaires, 
 - Calibration du capteur en fonction de la résistance nominale (relation de linéarité entre la résolution du capteur et la résistance nomninale).
 
 Gère les flux de données entre l'APK et le microcontrôleur via le module BT. Permet également d'effectuer les différents traitements de données, comme le calcul de la déformation longitudinale en fonction de la déflection ou encore le calcule de contrainte en fonction de la déformation et d'un certain matériau (module de Young). 
+
 4. APK : Affichage en temps réel  de la tension à la sortie de A0 (ADC sur 1024 bits) et tracé du graphe correspondant, affichage de la résistance du capteur, et affichage et modification de la valeur de R2.
 
 
