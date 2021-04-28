@@ -44,6 +44,8 @@ Gère les flux de données entre l'APK et le microcontrôleur via le module BT. 
 --------- 
 ## Banc de test <a name="paragraph5"></a>
 
+# Description du banc de test #
+
 
 La solution choisie afin de tester et caractériser les capteurs est l'application d'une déflection en compression ou en traction. 
 
@@ -68,4 +70,6 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 1. Formation des réseaux de percolation
 2. Epaisseur de la couche de graphite
 3. Homogénéité de la couche de graphite
+
+# Résultats #
 
