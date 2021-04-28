@@ -26,10 +26,12 @@ Ce projet aborde de nombreuses notions : la physique des systèmes granulaires, 
 1. Shield : comprend un amplificateur transimpédance, différents étages de filtrage, un module bluetooth (HC-05), un écran OLED (SSD1306) et un encodeur rotatoire (KY-040). La résistance R2 peut être changée facilement afin d'adapter le gain de l'amplificateur en fonction de la résistance du capteur. 
 2. Code Arduino : permet de piloter l'encodeur rotatoire et l'écran OLED. Un menu s'affiche à l'écran avec 3 fonctionnailités principales:
 - choix de R2
-- choix de l'affichage de différentes mesures en temps réel :  soit la tension à la sortie de A0 (ADC sur 1024 bits), soit la déformation longitudinale du capteur, la résistance du capteur 
-- Mesure de contrainte au niveau de la jauge de déformation en fonction du matériaux choisi
+- choix de l'affichage de différentes mesures en temps réel : soit la tension à la sortie de A0 (ADC sur 1024 bits), soit la déformation longitudinale du capteur, ou bien la résistance du capteur. 
+- Mesure de contrainte au niveau de la jauge de déformation en fonction du matériaux choisi.
+- Calibration du capteur en fonction de la résistance nominale (relation de linéarité entre la résolution du capteur et la résistance nomninale).
+
 Gère les flux de données entre l'APK et le microcontrôleur via le module BT. Permet également d'effectuer les différents traitements de données, comme le calcul de la déformation longitudinale en fonction de la déflection ou encore le calcule de contrainte en fonction de la déformation et d'un certain matériau (module de Young). 
-4. APK : 
+4. APK : Affichage en temps réel  de la tension à la sortie de A0 (ADC sur 1024 bits) et tracé du graphe correspondant, affichage de la résistance du capteur, et affichage et modification de la valeur de R2.
 
 
 
