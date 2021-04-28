@@ -72,5 +72,14 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 2. Epaisseur de la couche de graphite
 3. Homogénéité de la couche de graphite
 
+### Influence de R2 sur la mesure ###
+
+La résistance R2 permet d'adapter le gain de l'amplificateur. Il permet notamment de déterminer la plage de résistance mesurable : 
+
+$$ a=2 $$
+
+
+
+
 ### Résultats ###
 
