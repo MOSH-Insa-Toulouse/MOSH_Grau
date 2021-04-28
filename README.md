@@ -52,7 +52,7 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 
 **Paramètres étudiés :**
 
-*Paramètres contrôlables : *
+*Paramètres contrôlables :*
 
 1. Type de papier : 
 - Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
