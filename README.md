@@ -64,6 +64,7 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 2. Type de crayon : H, HB, B, 2B
 3. Forme de la jauge, notamment la surface de la couche de graphite, la longueur du motif de graphite etc... 
 4. Influence de la résistance nominale
+5. Influence de R2
 
 *Paramètres non contrôlables :*
 
