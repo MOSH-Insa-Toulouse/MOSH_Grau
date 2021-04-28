@@ -38,3 +38,26 @@ Gère les flux de données entre l'APK et le microcontrôleur via le module BT. 
 
 
 [¹]: https://www.nature.com/articles/srep03812
+
+
+
+--------- 
+## Banc de test <a name="paragraph5"></a>
+
+
+La solution choisie afin de tester et caractériser les capteurs est l'application d'une déflection en compression ou en traction. 
+
+- Défelction en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même.
+- Déflection en traction : idem qu'en compression mais plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge.  
+
+*Paramètres étudiés :*
+
+1. Type de papier : - Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
+                    - Feuille A4 de bureau standard, 80 g/m², épaisseur : 0,08mm, rigidité???
+                    - Fiche Bristol, 205 g/m², épaisseur : 0,22mm, rigidité ???
+
+2. Type de crayon : H, HB, B, 2B
+3. Forme de la jauge 
+4. Influence de la résistance nominale
+
+
