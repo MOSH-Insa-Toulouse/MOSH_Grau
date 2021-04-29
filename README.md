@@ -28,7 +28,7 @@ Ce projet aborde de nombreuses notions : la physique des systèmes granulaires, 
 - choix de R2
 - choix de l'affichage de différentes mesures en temps réel : soit la tension à la sortie de A0 (ADC sur 10 bits), soit la déformation longitudinale du capteur, ou bien la résistance du capteur. 
 - Mesure de contrainte au niveau de la jauge de déformation en fonction du matériaux choisi.
-- Calibration du capteur en fonction de la résistance nominale (relation de linéarité entre la résolution du capteur et la résistance nomninale).
+- Calibration du capteur (sensibilité).
 
 Gère les flux de données entre l'APK et le microcontrôleur via le module BT. Permet également d'effectuer les différents traitements de données, comme le calcul de la déformation longitudinale en fonction de la déflection ou encore le calcule de contrainte en fonction de la déformation et d'un certain matériau (module de Young). 
 
@@ -49,7 +49,7 @@ Gère les flux de données entre l'APK et le microcontrôleur via le module BT. 
 
 La solution choisie afin de tester et caractériser les capteurs est l'application d'une déflection en compression ou en traction. 
 
-- Défelction en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
+- Déflection en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
 - Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge.  
 
 **Paramètres étudiés :**
