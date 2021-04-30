@@ -17,7 +17,7 @@ SoftwareSerial BT_serial (rxpin, txpin);
 
 //################ constant OLED ############
 #define OLED_RESET -1
-#define DELAY 200
+#define DELAY 100
 
 //############# constant rotatory encoder  #########
 #define encoder0PinA 3 //clk
@@ -31,22 +31,34 @@ int ADC_pin = 0;
 
 int data = 0;
 
+//chaîne de caractère décrivant l'état du système : ADC,R2
+String system_state="";
+
+
+
 //Résistance de calibration
 String R2 = "1000";
 
+//Les choix de résistances disponibles sur l'OLED
+String tabRes [3]={"100", "1000", "10000"};
+
+//La position de l'incrémentation dans chaque menu
 byte countMenus [4]={0,0,0,0};
 
-byte MainMenuCount = 0;
-byte R2MenuCount = 0;
-byte MeasuresMenuCount = 0;
-byte StressMenuCount = 0;
+//byte MainMenuCount = 0;
+//byte R2MenuCount = 0;
+//byte MeasuresMenuCount = 0;
+//byte StressMenuCount = 0;
 
+//Le menu courant
 byte currentMenu=3;
 
+//Les différentes mesures
 int contrainte = 0;
 int tension = 0;
 int deformation = 0;
-int Rsensor = 0;
+float Rsensor = 0;
+
 
 int current_pos_enc=0;
 int previous_pos_enc=0;
@@ -85,12 +97,24 @@ previous_state_pinA = current_state_pinA;
 
 void doEncoderSwitch(){
   if(currentMenu==3){
-  currentMenu=MainMenuCount;
+  currentMenu=countMenus[3];
   }
   else{
+    if(currentMenu==0){
+      R2=tabRes[countMenus[0]];
+    }
+
     currentMenu=3;
   }
 }
+
+float computeRsensor(float Vadc, float Rcal){
+  float R=0;
+  R=(1+(pow(10, 5)/Rcal))*pow(10,5)*5/((Vadc/1024)*5)-pow(10,5)-pow(10,4);
+  return R;
+}
+
+
 
 void mainMenu() {
 
@@ -135,7 +159,7 @@ void MeasuresMenu() {
   print_oled("Tension : ", 10, 10, WHITE, 1);
   print_oled(String(tension), 80, 10, WHITE, 1);
 
-  print_oled("Déformation : ", 10, 20, WHITE, 1);
+  print_oled("Deformation : ", 10, 20, WHITE, 1);
   print_oled(String(deformation), 80, 20, WHITE, 1);
 
   display.setCursor(2, (countMenus[1] * 10));
@@ -194,6 +218,8 @@ void setup() {
 
   print_oled("Bonjour !", 64, 16, WHITE, 1);
 
+  display.display();
+
   delay(3000);
 
 }
@@ -203,13 +229,15 @@ void loop() {
   currentMillis = millis();
   if ((currentMillis - previousMillis) >= interval) {
     data = analogRead(ADC_pin);
-    data = map(data, 0, 1024, 0, 255);
-    BT_serial.write(data);
-    Serial.println(currentMenu);
+    BT_serial.flush();
+    Rsensor=computeRsensor(data, R2.toInt());
+    system_state=String(data)+","+String(Rsensor)+","+R2;
+    BT_serial.println(system_state);
+    Serial.println(Rsensor);
+    previousMillis=currentMillis;
   }
   if (BT_serial.available()) {
     R2 = (BT_serial.readString());
-    Serial.println(R2);
   }
 
   switch(currentMenu){
@@ -240,7 +268,7 @@ void loop() {
     //previous_pos_enc=current_pos_enc;
 
     countMenus[currentMenu]++;
-    countMenus[currentMenu]%3;
+    countMenus[currentMenu]=countMenus[currentMenu]%3;
     previous_pos_enc=current_pos_enc;
 
 
@@ -249,7 +277,7 @@ void loop() {
    if((current_pos_enc-previous_pos_enc) <= -4){
 
     countMenus[currentMenu]--;
-    countMenus[currentMenu]%3;
+    countMenus[currentMenu]=countMenus[currentMenu]%3;
     previous_pos_enc=current_pos_enc;
   }
   
