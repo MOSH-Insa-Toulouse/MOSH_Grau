@@ -27,6 +27,7 @@ SoftwareSerial BT_serial (rxpin, txpin);
 Adafruit_SSD1306 display(OLED_RESET);
 
 
+
 int ADC_pin = 0;
 
 int data = 0;
@@ -56,20 +57,49 @@ byte currentMenu=3;
 //Les différentes mesures
 int contrainte = 0;
 int tension = 0;
-int deformation = 0;
+float deformation = 0;
 float Rsensor = 0;
 
+String temp="";
 
+//Sensibilité du capteur en %(dR/R_0)/eps. Cette valeur est à déterminer par calibration et à renseigner par l'utilisateur 
+//à partir de l'APK
+//Avec 205g, HB, l=4cm, e=??
+float sensi=156416.0;
+
+//R_0 en ohm
+float R_0=7.2*pow(10,6);
+
+//Pour encodeur
 int current_pos_enc=0;
 int previous_pos_enc=0;
 
-const long interval = 1000;
+//Timing de la boucle de l'Arduino
+const long interval = 200;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 
+//Pour le sens de rotation de l'encodeur
 boolean dir = true;
 int current_state_pinA = 0;
 int previous_state_pinA = 0;
+
+String getValue(String data, char separator, int index)
+{
+  int found = 0;
+  int strIndex[] = {0, -1};
+  int maxIndex = data.length()-1;
+
+  for(int i=0; i<=maxIndex && found<=index; i++){
+    if(data.charAt(i)==separator || i==maxIndex){
+        found++;
+        strIndex[0] = strIndex[1]+1;
+        strIndex[1] = (i == maxIndex) ? i+1 : i;
+    }
+  }
+
+  return found>index ? data.substring(strIndex[0], strIndex[1]) : "";
+}
 
 //Afficher un texte sur l'écran OLED
 void print_oled(String s, int x, int y, uint16_t color, int size_text) {
@@ -79,6 +109,7 @@ void print_oled(String s, int x, int y, uint16_t color, int size_text) {
   display.println(s);
 }
 
+//Maj de la position de l'encodeur lorsqu'on le fait tourner
 void doEncoder(){
   current_state_pinA = digitalRead(encoder0PinA);
   if (current_state_pinA != previous_state_pinA) {
@@ -94,7 +125,7 @@ previous_state_pinA = current_state_pinA;
 }
 
 
-
+//
 void doEncoderSwitch(){
   if(currentMenu==3){
   currentMenu=countMenus[3];
@@ -108,14 +139,21 @@ void doEncoderSwitch(){
   }
 }
 
+//Calcule de la résistance du capteur en fonction de la tension sur la pin analogique 0 et de la résistance de calibration 
 float computeRsensor(float Vadc, float Rcal){
   float R=0;
   R=(1+(pow(10, 5)/Rcal))*pow(10,5)*5/((Vadc/1024)*5)-pow(10,5)-pow(10,4);
   return R;
 }
 
+//Calcule de la déformation en fonction de al sensibilité (% (dr/R_0) / eps)
+float computeEps(float R_0, float sensi, float R){
+  float dR=((R_0-R)/R_0)*100;
+  return (dR/sensi);
+}
 
 
+//Afiichage du menu principal
 void mainMenu() {
 
   //---------------------------------
@@ -135,6 +173,7 @@ void mainMenu() {
   display.display();
 }
 
+//Afiichage du menu du choix de la résistance de calibration 
 void R2Menu() {
 
   //---------------------------------
@@ -150,17 +189,18 @@ void R2Menu() {
   display.display();
 }
 
+//Affichage du menu des choix de mesures
 void MeasuresMenu() {
 
   //---------------------------------
   print_oled("Resistance : ", 10, 0, WHITE, 1);
-  print_oled(String(Rsensor), 80, 0, WHITE, 1);
+  print_oled(String(Rsensor,0), 80, 0, WHITE, 1);
 
-  print_oled("Tension : ", 10, 10, WHITE, 1);
-  print_oled(String(tension), 80, 10, WHITE, 1);
+  print_oled("Val ADC : ", 10, 10, WHITE, 1);
+  print_oled(String(data), 80, 10, WHITE, 1);
 
   print_oled("Deformation : ", 10, 20, WHITE, 1);
-  print_oled(String(deformation), 80, 20, WHITE, 1);
+  print_oled(String(deformation*pow(10,3), 5), 80, 20, WHITE, 1);
 
   display.setCursor(2, (countMenus[1] * 10));
   display.println(">");
@@ -168,7 +208,7 @@ void MeasuresMenu() {
   display.display();
 }
 
-
+//Affichage du menu du calcule de contraintes
 void StressMenu() {
 
   //---------------------------------
@@ -187,6 +227,8 @@ void StressMenu() {
 
 
 void setup() {
+
+  //Pin du bus Serie
   pinMode(rxpin, INPUT);
   pinMode(txpin, OUTPUT);
 
@@ -225,21 +267,35 @@ void setup() {
 }
 
 void loop() {
-
   currentMillis = millis();
+  //On boucle en fonction de l'interval défini
   if ((currentMillis - previousMillis) >= interval) {
+
+    //Lecture de la valeur de la tension sur la pin analogique 0
     data = analogRead(ADC_pin);
+
+    //Nettoyage des buffers
     BT_serial.flush();
     Rsensor=computeRsensor(data, R2.toInt());
+    deformation=computeEps(R_0, sensi, Rsensor);
+
+    //Récupération de l'état du système
     system_state=String(data)+","+String(Rsensor)+","+R2;
+    //Etat du système envoyé sur l'APK
     BT_serial.println(system_state);
-    Serial.println(Rsensor);
+    //Serial.println(Rsensor);
     previousMillis=currentMillis;
   }
   if (BT_serial.available()) {
-    R2 = (BT_serial.readString());
+    //Lecture des données envoyées par l'APK (pour l'instant que la résistance de calibration 
+
+    temp=(BT_serial.readString());
+    R2=getValue(temp, ',', 0).toInt();
+    sensi=getValue(temp, ',', 1).toInt();
+    R_0=getValue(temp, ',', 2).toInt();
   }
 
+  //Gestion de l'afichage des différents menus
   switch(currentMenu){
     case 0:
       display.clearDisplay();
@@ -260,7 +316,7 @@ void loop() {
   }
  
   
-
+  
   if((current_pos_enc-previous_pos_enc) >= 4){
 
     //MainMenuCount++;
