@@ -1,6 +1,5 @@
 EESchema Schematic File Version 4
-LIBS:shield-cache
-EELAYER 29 0
+EELAYER 30 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
@@ -387,8 +386,6 @@ Wire Notes Line
 Wire Notes Line
 	8300 750  8300 3950
 Wire Notes Line
-	8300 3950 1850 3950
-Wire Notes Line
 	1850 3950 1850 750 
 Text GLabel 4500 2050 2    50   Input ~ 0
 IN+
@@ -603,8 +600,6 @@ F 3 "" H 7600 3100 50  0001 C CNN
 $EndComp
 Text GLabel 6850 3100 3    50   Input ~ 0
 IN-
-Wire Notes Line
-	1850 4200 8300 4200
 Wire Notes Line
 	8300 4200 8300 6250
 Wire Notes Line
@@ -821,4 +816,8 @@ NoConn ~ 9350 1450
 NoConn ~ 8950 1450
 NoConn ~ 9150 1450
 NoConn ~ 6200 2350
+Wire Notes Line
+	1850 4200 8300 4200
+Wire Notes Line
+	8300 3950 1850 3950
 $EndSCHEMATC

@@ -65,7 +65,7 @@ String temp="";
 //Sensibilité du capteur en %(dR/R_0)/eps. Cette valeur est à déterminer par calibration et à renseigner par l'utilisateur 
 //à partir de l'APK
 //Avec 205g, HB, l=4cm, e=??
-float sensi=156416.0;
+float sensi=15;
 
 //R_0 en ohm
 float R_0=7.2*pow(10,6);
