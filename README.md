@@ -52,8 +52,7 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 - Déflection en compression : on fixe le capteur au niveau de la partie la plus large, et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
 - Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge. 
 
- ![alt text](https://github.com/MOSH-Insa-Toulouse/MOSH_Grau/blob/main/images/photo_banc.jpg) 
- <img src=https://github.com/MOSH-Insa-Toulouse/MOSH_Grau/blob/main/images/photo_banc.jpg width="48">
+ <img src=https://github.com/MOSH-Insa-Toulouse/MOSH_Grau/blob/main/images/photo_banc.jpg width="200">
 
 **Paramètres étudiés :**
 
