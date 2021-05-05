@@ -17,7 +17,7 @@ SoftwareSerial BT_serial (rxpin, txpin);
 
 //################ constant OLED ############
 #define OLED_RESET -1
-#define DELAY 100
+#define DELAY 1000
 
 //############# constant rotatory encoder  #########
 #define encoder0PinA 3 //clk
@@ -55,10 +55,14 @@ byte countMenus [4]={0,0,0,0};
 byte currentMenu=3;
 
 //Les différentes mesures
-int contrainte = 0;
+float contrainte = 0;
 int tension = 0;
 float deformation = 0;
 float Rsensor = 0;
+
+//Modules d'Young en GPa de l'acier, Aluminium et Fer
+int tabE [3]={210, 69, 196};
+int E=0;
 
 String temp="";
 
@@ -75,7 +79,7 @@ int current_pos_enc=0;
 int previous_pos_enc=0;
 
 //Timing de la boucle de l'Arduino
-const long interval = 200;
+const long interval = 500;
 unsigned long currentMillis = 0;
 unsigned long previousMillis = 0;
 
@@ -130,9 +134,12 @@ void doEncoderSwitch(){
   if(currentMenu==3){
   currentMenu=countMenus[3];
   }
-  else{
+  else {
     if(currentMenu==0){
       R2=tabRes[countMenus[0]];
+    }
+    else if(currentMenu==2){
+      E=tabE[countMenus[2]];
     }
 
     currentMenu=3;
@@ -146,7 +153,7 @@ float computeRsensor(float Vadc, float Rcal){
   return R;
 }
 
-//Calcule de la déformation en fonction de al sensibilité (% (dr/R_0) / eps)
+//Calcule de la déformation en fonction de al sensibilité (% (dr/R_0) / eps (%))
 float computeEps(float R_0, float sensi, float R){
   float dR=((R_0-R)/R_0)*100;
   return (dR/sensi);
@@ -160,7 +167,7 @@ void mainMenu() {
   print_oled("R2 : ", 10, 0, WHITE, 1);
   print_oled(R2, 90, 0, WHITE, 1);
 
-  print_oled("Val ADC : ", 10, 10, WHITE, 1);
+  print_oled("ADC : ", 10, 10, WHITE, 1);
   print_oled(String(data), 90, 10, WHITE, 1);
 
   print_oled("Contrainte : ", 10, 20, WHITE, 1);
@@ -193,14 +200,14 @@ void R2Menu() {
 void MeasuresMenu() {
 
   //---------------------------------
-  print_oled("Resistance : ", 10, 0, WHITE, 1);
-  print_oled(String(Rsensor,0), 80, 0, WHITE, 1);
+  print_oled("R : ", 10, 0, WHITE, 1);
+  print_oled(String(Rsensor,0), 60, 0, WHITE, 1);
 
-  print_oled("Val ADC : ", 10, 10, WHITE, 1);
-  print_oled(String(data), 80, 10, WHITE, 1);
+  print_oled("ADC : ", 10, 10, WHITE, 1);
+  print_oled(String(data), 60, 10, WHITE, 1);
 
-  print_oled("Deformation : ", 10, 20, WHITE, 1);
-  print_oled(String(deformation*pow(10,3), 5), 80, 20, WHITE, 1);
+  print_oled("Def : ", 10, 20, WHITE, 1);
+  print_oled(String(deformation, 3), 60, 20, WHITE, 1);
 
   display.setCursor(2, (countMenus[1] * 10));
   display.println(">");
@@ -278,12 +285,13 @@ void loop() {
     BT_serial.flush();
     Rsensor=computeRsensor(data, R2.toInt());
     deformation=computeEps(R_0, sensi, Rsensor);
+    contrainte=E*deformation/100;
 
     //Récupération de l'état du système
     system_state=String(data)+","+String(Rsensor)+","+R2;
     //Etat du système envoyé sur l'APK
     BT_serial.println(system_state);
-    //Serial.println(Rsensor);
+    //Serial.println(system_state);
     previousMillis=currentMillis;
   }
   if (BT_serial.available()) {
@@ -293,6 +301,7 @@ void loop() {
     R2=getValue(temp, ',', 0).toInt();
     sensi=getValue(temp, ',', 1).toInt();
     R_0=getValue(temp, ',', 2).toInt();
+    Serial.println(R2);
   }
 
   //Gestion de l'afichage des différents menus
