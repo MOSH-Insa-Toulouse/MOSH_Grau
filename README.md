@@ -49,19 +49,22 @@ Gère les flux de données entre l'APK et le microcontrôleur via le module BT. 
 
 La solution choisie afin de tester et caractériser les capteurs est l'application d'une déflection en compression ou en traction. 
 
-- Déflection en compression : on fixe le capteur et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
-- Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge.  
+- Déflection en compression : on fixe le capteur au niveau de la partie la plus large, et on applique une déflection contrôlable et mesurable (par exemple avec une règle), perpendiculairement vers le haut (avec la couche de graphite sur la face supérieure du papier) et à l'extrèmité de la jauge pour qu'elle se replie sur elle-même. 
+- Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge. 
+
+ ![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png) 
+
 
 **Paramètres étudiés :**
 
 *Paramètres contrôlables :*
 
 1. Type de papier : 
-- Papier canson, 180 g/m², épaiseur : 0,21mm, rigidité???
-- Feuille A4 de bureau standard, 80 g/m², épaisseur : 0,08mm, rigidité???
-- Fiche Bristol, 205 g/m², épaisseur : 0,22mm, rigidité ???
+- Papier canson, 180 g/m², épaiseur : 0,21mm
+- Feuille A4 de bureau standard, 80 g/m², épaisseur : 0,08mm,
+- Fiche Bristol, 205 g/m², épaisseur : 0,22mm
 
-2. Type de crayon : H, HB, B, 2B
+2. Type de crayon : De 4H à 4B
 3. Forme de la jauge, notamment la surface de la couche de graphite, la longueur du motif de graphite etc... 
 4. Influence de la résistance nominale
 5. Influence de R2
