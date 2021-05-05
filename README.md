@@ -7,7 +7,7 @@
 * 3 [Arduino](#paragraph3)
 * 4 [APK](#paragraph4)  
 * 5 [Banc de test](#paragraph5)
-* 6 [Datasheet](#paragraph6)
+* 6 [Idées d'amélioration et de développement](#paragraph6)
    
    
    La plupart des iformations se trouvent dans la datasheet.
@@ -93,5 +93,19 @@ La résistance R2 permet d'adapter le gain de l'amplificateur. Il permet notamme
 
 
 
-### Résultats ###
+###Idées d'amélioration et de développement <a name="paragraph6"></a>
+
+
+- Réfléchir à un moyen de déposer le graphite de manière plus homogène
+- Continuer à étudier les différents paramètre : dimensions de la jauge de graphite, dimensions du motif de graphite
+- Réfléchir à une prise de contact plus appropriée, avec des électrodes fixes
+- Continuer à prendre des mesures pour préciser ou réfuter la relation entre la résistance nominale et le facteur de jauge
+- Faire les mesures en compression
+- Automatiser le banc de test, en fixant tout simplement un fil au bout de la jauge, avec l'autre bout du fil accroché à un servomoteur. L'angle de rotation du servo-moteur est directement relié à la déflection de la jauge. 
+- Optimiser le code de l'APK, et de l'Arduino, ajout de nouvelles fonctionnalités
+
+
+
+
+
 
