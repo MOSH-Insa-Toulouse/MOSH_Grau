@@ -53,6 +53,16 @@ La solution choisie afin de tester et caractériser les capteurs est l'applicati
 - Déflection en traction : idem qu'en compression mais avec une délection provoquée par une froce dirigée vers le bas (avec la couche de graphite sur la face supérieure du papier). Plus difficile à mettre en oeuvre pour des raisons pratiques, notamment pour mesurer la déflection correctement. On peut alors s'aider de poids que l'on suspend à l'extrémité de la jauge. 
 
  <img src=https://github.com/MOSH-Insa-Toulouse/MOSH_Grau/blob/main/images/photo_banc.jpg width="200">
+ 
+ On mesure ainsi la variation de résistance relative en fonction de la déflection. En considérant notre capteur comme une poutre, avec de petites déformation nous pouvons alor remonter à la déformation logitudinale du capteur et calculer son facteur de jauge. Il est important que les prises de contact soient immobiles tout au long de la mesure pour ne pas fausser celle-ci. 
+ Il faut également toucher le moins possible la couche de graphite du capteur pour ne pas biaiser les mesures.
+ Pour effectuer nos mesures, noud avons moyenné chaque point sur 5 secondes à une fréquence dacquisition de 5Hz. L'incertitude de chaque mesure correspond à l'écart type de l'ensemble des échantillons correspondants à la mesure (voir APK).
+ La défelction maximale appliquée est de 2 cm, au delà la déformation du capteur devient trop importante et il se peut que celui-ci se retrouve déformé de manière irréversible. 
+ 
+ 
+
+ 
+  
 
 **Paramètres étudiés :**
 
